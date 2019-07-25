@@ -10,7 +10,7 @@ $(document).ready(function () {
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
-var timeLeft =6;
+var timeLeft =21;//1 more second than displayed because it lags to display current run time
 var currentSet = 0;//use this to loop through the questions and answer choices
 
 var trivia = [{
@@ -124,7 +124,7 @@ function nextQuestion() {
       // var textValue = $('input:radio:checked')[0].nextSibling.data;//this works for text
       console.log(textValue);
       results(textValue);
-      if(currentSet >= trivia.length){
+      if(currentSet === trivia.length){
         endGame();
       }
     });
@@ -171,11 +171,12 @@ function results(e) {
 function endGame(){
 
   $("#question").empty();
+  timeLeft = 0
+  $("#timer").html("Time Remaining: " + timeLeft + " Seconds");
   $("#question").html("<div class= correct>" + " Correct answers: " + correct + "</div>" +"<br>");
   $("#question").append("<div class= incorrect>" + " Incorrect answers: " + incorrect + "</div>" +"<br>");
   $("#question").append("<div class= unanswered>" + " Unanswered: " + unanswered + "</div>" +"<br>");
 
-  $("#timer").html("Time Remaining: " + "0" + " Seconds");
 
 }
 

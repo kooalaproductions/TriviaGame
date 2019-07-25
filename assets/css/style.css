@@ -19,3 +19,13 @@ body{
     margin-top: 100px;
     padding-left: 60px;
 }
+@font-face {
+  font-family: HarryPotter;
+  src: url(ParryHotter.ttf);
+}
+.jumbotron .h1, .jumbotron h1 {
+  font-size: 80px;
+  color: red;
+  font-family: HarryPotter;
+  
+}
