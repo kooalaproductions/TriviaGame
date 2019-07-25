@@ -3,6 +3,7 @@ $(document).ready(function () {
   // event listeners
   $("#remaining-time").hide();
   $("#choices").hide();
+  $("#results").hide();
   // $("#start").on('click', trivia.startGame);
   // $(document).on('click' , '.option', trivia.guessChecker);
 
@@ -11,10 +12,8 @@ $(document).ready(function () {
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
-var clockRunning = true;
-var intervalId;
-var timeLeft = 4;
-var currentSet = 0;
+var timeLeft =30;
+var currentSet = 0;//use this to loop through the questions and answer choices
 
 var trivia = [{
 
@@ -63,13 +62,10 @@ var trivia = [{
   }
 
 
-];
-
+]
+//game starts when start button is clicked
 $("#start").on('click', function (event) {
-
-  // console.log("hello");
   startGame();
-
 
 });
 
@@ -86,18 +82,20 @@ function startGame() {
 
 function timer() { //timer for quiz
   var downloadTimer = setInterval(function () {
-    $("#timer").html(timeLeft);
+    $("#timer").html(timeLeft + " Seconds");
     timeLeft -= 1;
-    $("#timer").html(timeLeft);
+    $("#timer").html(timeLeft + " Seconds");
 
     if (timeLeft <= 0) {
 
       clearInterval(downloadTimer);
       console.log("time is up");
+      endGame();
 
     }
   }, 1000);
 }
+
 
 function nextQuestion() {
   // var questionContent = question;
@@ -114,9 +112,7 @@ function nextQuestion() {
 
       //prints out the answers with radios
       var check = (trivia[currentSet].choices[i]);
-      $("#question").append("<label><input type=radio name=choice id=choices" + i +" value=" + check + " >" +" " +check +" " + "</input></label>");
-
-
+      $("#question").append('<label><input type="radio" value="' + check + '" name="choice">' + check + " " + '</input></label>');
     }
 
     //submit button
@@ -124,24 +120,13 @@ function nextQuestion() {
 
     $("#submit").on('click', function (event) {
 
-      //  var textValue = $('input:radio:checked').val(); //THIS WORKS FOR VALUES
+       var textValue = $('input:radio:checked').val(); //THIS WORKS FOR VALUES
 
-      var textValue = $('input:radio:checked')[0].nextSibling.data;
+      // var textValue = $('input:radio:checked')[0].nextSibling.data;//this works for text
       console.log(textValue);
       results(textValue);
-      //  $("#question").empty();
-
-
     });
-
-    // currentSet++;
-    // console.log(currentSet);
-
-
   }
-
-
-
 }
 
 function results(e) {
@@ -149,16 +134,23 @@ function results(e) {
   var userAnswer = e;
 
   console.log("the user picked: " + userAnswer);
-  var computerAnswer = trivia[currentSet].answer
-  console.log("this is the computer answer: ==> " + computerAnswer)
+  console.log("this is the type of USER choise----: " + typeof userAnswer);
 
-  if (userAnswer = computerAnswer) {
+  console.log("-----------------------");
+  var computerAnswer = trivia[currentSet].answer;
+
+  console.log("this is the computer answer: ==> " + computerAnswer);
+  console.log("this is the type of computer choice:::" + typeof computerAnswer);
+
+  if (userAnswer === computerAnswer) {
+
     correct++;
     currentSet++
     console.log(currentSet);
     console.log("correct answer");
     $("#question").empty();
     nextQuestion();
+  
   } else {
     incorrect++;
     currentSet++
@@ -166,9 +158,20 @@ function results(e) {
     console.log("incorrect answer");
     $("#question").empty();
     nextQuestion();
-
+    
   }
 
+}
 
+function endGame(){
+
+  $("#question").empty();
+  $("#question").html("<div class= correct>" + " Correct answers: " + correct + "</div>" +"<br>");
+  $("#question").append("<div class= incorrect>" + " Incorrect answers: " + incorrect + "</div>" +"<br>");
 
 }
+
+//print out results 
+//correct answers: 
+//incorrect answers: 
+//unanswered:
