@@ -4,15 +4,13 @@ $(document).ready(function () {
   $("#remaining-time").hide();
   $("#choices").hide();
   $("#results").hide();
-  // $("#start").on('click', trivia.startGame);
-  // $(document).on('click' , '.option', trivia.guessChecker);
 
 });
 
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
-var timeLeft =30;
+var timeLeft =6;
 var currentSet = 0;//use this to loop through the questions and answer choices
 
 var trivia = [{
@@ -65,26 +63,26 @@ var trivia = [{
 ]
 //game starts when start button is clicked
 $("#start").on('click', function (event) {
+  $("#remaining-time").show();
+  timer();
   startGame();
+  
 
 });
 
 function startGame() {
   $("#start").hide();
 
-  $("#remaining-time").show();
-
-  // $("#timer").text("00:10");
-  timer();
+  
   nextQuestion();
 
 }
 
 function timer() { //timer for quiz
   var downloadTimer = setInterval(function () {
-    $("#timer").html(timeLeft + " Seconds");
-    timeLeft -= 1;
-    $("#timer").html(timeLeft + " Seconds");
+    $("#timer").html("Time Remaining: " + timeLeft + " Seconds");
+    timeLeft = timeLeft -1;
+    $("#timer").html("Time Remaining: " + timeLeft + " Seconds");
 
     if (timeLeft <= 0) {
 
@@ -104,6 +102,7 @@ function nextQuestion() {
 
     var questionContent = trivia[currentSet].question;
     console.log(trivia[currentSet].question);
+
     $("#question").append(questionContent + "<br>");
 
     var choicesLength = trivia[currentSet].choices.length;
@@ -125,11 +124,16 @@ function nextQuestion() {
       // var textValue = $('input:radio:checked')[0].nextSibling.data;//this works for text
       console.log(textValue);
       results(textValue);
+      if(currentSet >= trivia.length){
+        endGame();
+      }
     });
   }
 }
 
 function results(e) {
+
+  
 
   var userAnswer = e;
 
@@ -160,6 +164,7 @@ function results(e) {
     nextQuestion();
     
   }
+  unanswered = trivia.length - currentSet;
 
 }
 
@@ -168,6 +173,9 @@ function endGame(){
   $("#question").empty();
   $("#question").html("<div class= correct>" + " Correct answers: " + correct + "</div>" +"<br>");
   $("#question").append("<div class= incorrect>" + " Incorrect answers: " + incorrect + "</div>" +"<br>");
+  $("#question").append("<div class= unanswered>" + " Unanswered: " + unanswered + "</div>" +"<br>");
+
+  $("#timer").html("Time Remaining: " + "0" + " Seconds");
 
 }
 
