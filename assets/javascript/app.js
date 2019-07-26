@@ -10,7 +10,7 @@ $(document).ready(function () {
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
-var timeLeft =21;//1 more second than displayed because it lags to display current run time
+var timeLeft =31;//1 more second than displayed because it lags to display current run time
 var currentSet = 0;//use this to loop through the questions and answer choices
 
 var trivia = [{
@@ -64,6 +64,7 @@ var trivia = [{
 //game starts when start button is clicked
 $("#start").on('click', function (event) {
   $("#remaining-time").show();
+  $("#message").hide();
   
   startGame();
   

@@ -30,3 +30,25 @@ body{
   font-family: HarryPotter;
   
 }
+#message{
+  margin-bottom: 30px;
+  font-family: HarryPotter;
+  font-size: 30px;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: red;
+  background-color:lightblue;
+  margin-top: 30px;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+  margin-top: 30px;
+}
