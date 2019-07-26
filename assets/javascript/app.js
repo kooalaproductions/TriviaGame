@@ -5,7 +5,7 @@ $(document).ready(function () {
   $("#choices").hide();
   $("#results").hide();
 
-});
+
 
 var correct = 0;
 var incorrect = 0;
@@ -64,7 +64,7 @@ var trivia = [{
 //game starts when start button is clicked
 $("#start").on('click', function (event) {
   $("#remaining-time").show();
-  timer();
+  
   startGame();
   
 
@@ -72,9 +72,8 @@ $("#start").on('click', function (event) {
 
 function startGame() {
   $("#start").hide();
-
+  timer();
   
-  nextQuestion();
 
 }
 
@@ -92,6 +91,7 @@ function timer() { //timer for quiz
 
     }
   }, 1000);
+  nextQuestion();
 }
 
 
@@ -102,6 +102,7 @@ function nextQuestion() {
 
     var questionContent = trivia[currentSet].question;
     console.log(trivia[currentSet].question);
+
 
     $("#question").append(questionContent + "<br>");
 
@@ -133,8 +134,6 @@ function nextQuestion() {
 
 function results(e) {
 
-  
-
   var userAnswer = e;
 
   console.log("the user picked: " + userAnswer);
@@ -144,7 +143,7 @@ function results(e) {
   var computerAnswer = trivia[currentSet].answer;
 
   console.log("this is the computer answer: ==> " + computerAnswer);
-  console.log("this is the type of computer choice:::" + typeof computerAnswer);
+  console.log("this is the type of computer choice:" + typeof computerAnswer);
 
   if (userAnswer === computerAnswer) {
 
@@ -172,13 +171,16 @@ function endGame(){
 
   $("#question").empty();
   timeLeft = 0
-  $("#timer").html("Time Remaining: " + timeLeft + " Seconds");
+  $("#timer").html("All Done!!!");
+
+  // $("#timer").html("Time Remaining: " + timeLeft + " Seconds");
   $("#question").html("<div class= correct>" + " Correct answers: " + correct + "</div>" +"<br>");
   $("#question").append("<div class= incorrect>" + " Incorrect answers: " + incorrect + "</div>" +"<br>");
   $("#question").append("<div class= unanswered>" + " Unanswered: " + unanswered + "</div>" +"<br>");
-
-
+ 
 }
+
+});
 
 //print out results 
 //correct answers: 
